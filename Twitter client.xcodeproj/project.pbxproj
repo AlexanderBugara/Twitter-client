@@ -235,7 +235,7 @@
 				TargetAttributes = {
 					1139D7A91D9327D00017851C = {
 						CreatedOnToolsVersion = 7.3.1;
-						DevelopmentTeam = 9D83MC32AG;
+						DevelopmentTeam = 5ZFH6ZJS9N;
 					};
 					1139D7C51D9327D10017851C = {
 						CreatedOnToolsVersion = 7.3.1;
@@ -469,7 +469,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -510,7 +510,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -523,11 +523,11 @@
 			baseConfigurationReference = 721B701197850BC225D44A50 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 9D83MC32AG;
+				DEVELOPMENT_TEAM = 5ZFH6ZJS9N;
 				INFOPLIST_FILE = "Twitter client/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.exs.application.Twitter-client";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.Twitter-client.com";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -537,11 +537,11 @@
 			baseConfigurationReference = 1C09AEB23B965B2F1A37A035 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 9D83MC32AG;
+				DEVELOPMENT_TEAM = 5ZFH6ZJS9N;
 				INFOPLIST_FILE = "Twitter client/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.exs.application.Twitter-client";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.Twitter-client.com";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

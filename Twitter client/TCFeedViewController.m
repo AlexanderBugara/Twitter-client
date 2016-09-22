@@ -65,15 +65,17 @@
 }
 
 - (void)downloadTwitterFeed {
-  SLRequest *feedRequest = [SLRequest requestForServiceType:SLServiceTypeTwitter requestMethod:SLRequestMethodGET URL:[NSURL URLWithString:[TCTwitterPaths feedPath]] parameters:@{@"count" : @"50", @"screen_name" : @"test"}];
-  
-  feedRequest.account = [self account];
   __weak __typeof (self) weakSelf = self;
+
+  SLRequest *feedRequest = [SLRequest requestForServiceType:SLServiceTypeTwitter requestMethod:SLRequestMethodGET URL:[NSURL URLWithString:[TCTwitterPaths feedPath]] parameters:@{@"count" : @"50", @"screen_name" : weakSelf.selectedAccountViewModel.userName}];
+  
+  feedRequest.account = [weakSelf account];
   [feedRequest performRequestWithHandler:^(NSData *responseData, NSHTTPURLResponse *urlResponse, NSError *error) {
-      id responseJson = [weakSelf jsonFromData:responseData];
-      TCCoreDataManager *coreDataManager = [[TCCoreDataManager alloc] initWithTwitterFeed:responseJson];
-      [coreDataManager start];
+    id responseJson = [weakSelf jsonFromData:responseData];
+    TCCoreDataManager *coreDataManager = [[TCCoreDataManager alloc] initWithTwitterFeed:responseJson];
+    [coreDataManager start];
   }];
+
 }
 
 - (ACAccount *)account {
@@ -84,6 +86,7 @@
   NSError *error;
   return [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
 }
+
 @end
 
 
