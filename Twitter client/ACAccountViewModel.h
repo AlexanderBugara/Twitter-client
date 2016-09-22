@@ -13,4 +13,5 @@
 @interface ACAccountViewModel : NSObject
 - (NSString *)userName;
 - (id)initWithAccount:(ACAccount *)account;
+- (ACAccount *)account;
 @end

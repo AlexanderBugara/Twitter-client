@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@class RACSignal;
+@class RACSignal, ACAccountViewModel;
 
 @interface TCFeedViewController : UITableViewController
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *logInButton;
@@ -16,7 +16,8 @@
 @end
 
 @interface TCFeedViewModel : NSObject
-@property (nonatomic, strong) NSString *userName;
-- (RACSignal *)signalGetTwitterAccounts;
+@property (nonatomic, strong) NSString *navigationItemTitle;
+@property (nonatomic, strong) NSArray *accounts;
+- (void)setAccauntViewModel:(ACAccountViewModel *)accountViewModel;
 @end
 

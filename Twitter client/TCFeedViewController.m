@@ -10,30 +10,30 @@
 #import <ReactiveCocoa/ReactiveCocoa.h>
 #import <Accounts/Accounts.h>
 #import "ACAccountViewModel.h"
+#import "TCTwitterPaths.h"
+#import <Social/Social.h>
+#import "TCCoreDataManager.h"
 
 @interface TCFeedViewModel ()
 @property (nonatomic, strong) ACAccountStore *accountStore;
+@property (nonatomic, strong) ACAccountViewModel *selectedAccountViewModel;
+@property (nonatomic, strong) NSArray *twitts;
 @end
 
 @implementation TCFeedViewModel
 
-- (RACSignal *)signalGetTwitterAccounts {
-  RACSignal *result = [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
-    @weakify(self);
-    [self_weak_.accountStore requestAccessToAccountsWithType:[self_weak_ accountType] options:nil completion:^(BOOL granted, NSError *error) {
-      if (granted) {
-        
-        NSArray *accounts = [self_weak_.accountStore accountsWithAccountType:[self_weak_ accountType]];
-        
-        [subscriber sendNext:[self_weak_ viewModelsForAccounts:accounts]];
-        [subscriber sendCompleted];
-      } else {
-        
-      }
-    }];
-    return nil;
+- (void)extractAccounts {
+  
+  __weak __typeof (self) weakSelf = self;
+  [self.accountStore requestAccessToAccountsWithType:[self accountType] options:nil completion:^(BOOL granted, NSError *error) {
+    if (granted) {
+      NSArray *accaunts = [weakSelf.accountStore accountsWithAccountType:[weakSelf accountType]];
+      weakSelf.accounts = [self viewModelsForAccounts:accaunts];
+      
+    } else {
+      
+    }
   }];
-  return [result deliverOnMainThread];
 }
 
 - (NSArray *)viewModelsForAccounts:(NSArray *)accounts {
@@ -58,24 +58,51 @@
 - (ACAccountType *)accountType {
   return [self.accountStore accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter];
 }
+
+- (void)setAccauntViewModel:(ACAccountViewModel *)accountViewModel {
+  _selectedAccountViewModel = accountViewModel;
+  [self setNavigationItemTitle:accountViewModel.userName];
+}
+
+- (void)downloadTwitterFeed {
+  SLRequest *feedRequest = [SLRequest requestForServiceType:SLServiceTypeTwitter requestMethod:SLRequestMethodGET URL:[NSURL URLWithString:[TCTwitterPaths feedPath]] parameters:@{@"count" : @"50", @"screen_name" : @"test"}];
+  
+  feedRequest.account = [self account];
+  __weak __typeof (self) weakSelf = self;
+  [feedRequest performRequestWithHandler:^(NSData *responseData, NSHTTPURLResponse *urlResponse, NSError *error) {
+      id responseJson = [weakSelf jsonFromData:responseData];
+      TCCoreDataManager *coreDataManager = [[TCCoreDataManager alloc] initWithTwitterFeed:responseJson];
+      [coreDataManager start];
+  }];
+}
+
+- (ACAccount *)account {
+  return [self.selectedAccountViewModel account];
+}
+
+- (id)jsonFromData:(NSData *)data {
+  NSError *error;
+  return [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
+}
 @end
 
 
 @interface TCFeedViewController ()
 @property (nonatomic, strong) TCFeedViewModel *viewModel;
-@property (nonatomic, strong) ACAccountViewModel *selectedAccountViewModel;
+@property (nonatomic, strong) NSArray *accounts;
+@property (nonatomic, strong) NSArray *twitts;
 @end
 
 @implementation TCFeedViewController
 
 - (IBAction)loginAction:(id)sender {
-  [self selectLoginAccaunt];
+  [self.viewModel extractAccounts];
 }
 
 - (void)viewDidLoad {
   [super viewDidLoad];
   [self configure];
-  [self selectLoginAccaunt];
+  [self.viewModel extractAccounts];
 }
 
 - (TCFeedViewModel *)viewModel {
@@ -87,11 +114,9 @@
 
 - (void)configure {
   @weakify(self);
-  RAC(self_weak_, navigationItem.title) = [RACObserve(self_weak_, viewModel.userName) deliverOnMainThread];
-}
-
-- (BOOL)isArrayAndItNotAmpty:(id)obj {
-  return ([obj isKindOfClass:[NSArray class]] && [(NSArray *)obj count] > 0);
+  RAC(self_weak_, navigationItem.title) = [RACObserve(self_weak_, viewModel.navigationItemTitle) deliverOnMainThread];
+  RAC(self_weak_, accounts) = [RACObserve(self_weak_, viewModel.accounts) deliverOnMainThread];
+  RAC(self_weak_, twitts) = [RACObserve(self_weak_, viewModel.twitts) deliverOnMainThread];
 }
 
 - (UIAlertAction *)actionWithTitle:(NSString *)title
@@ -102,25 +127,24 @@
   }];
 }
 
-- (void)selectLoginAccaunt {
+- (void)setAccounts:(NSArray *)accounts {
+  _accounts = accounts;
+  [self displaySelectionOfAccounts:accounts];
+}
+
+- (void)displaySelectionOfAccounts:(NSArray *)accounts {
+  if ([accounts count] == 0 || accounts == nil) return;
   
-  @weakify(self);
-  [[self.viewModel signalGetTwitterAccounts] subscribeNext:^(id x) {
-    
-    if ([self_weak_ isArrayAndItNotAmpty:x]) {
-      UIAlertController *accountSelection = [[UIAlertController alloc] init];
-      
-      for (ACAccountViewModel *viewModel in (NSArray *)x) {
-        [accountSelection addAction:[self_weak_ actionWithTitle:viewModel.userName handler:^{
-              self_weak_.selectedAccountViewModel = viewModel;
-              self_weak_.viewModel.userName = viewModel.userName;
-        }]];
-      }
-      
-      [self_weak_ presentViewController:accountSelection animated:YES completion:nil];
-    }
-  }];
-  
+  UIAlertController *accountSelection = [[UIAlertController alloc] init];
+
+  __weak __typeof (self) weakSelf = self;
+  for (ACAccountViewModel *viewModel in accounts) {
+    [accountSelection addAction:[self actionWithTitle:viewModel.userName handler:^{
+      [weakSelf.viewModel setAccauntViewModel:viewModel];
+      [weakSelf.viewModel downloadTwitterFeed];
+    }]];
+  }
+  [self presentViewController:accountSelection animated:YES completion:nil];
 }
 
 @end

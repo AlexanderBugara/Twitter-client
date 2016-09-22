@@ -27,4 +27,8 @@
   return self.account.username;
 }
 
+- (ACAccount *)account {
+  return _account;
+}
+
 @end

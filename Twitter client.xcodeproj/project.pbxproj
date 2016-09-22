@@ -18,6 +18,11 @@
 		1139D7CB1D9327D10017851C /* Twitter_clientTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1139D7CA1D9327D10017851C /* Twitter_clientTests.m */; };
 		11B1E9881D932C5500043958 /* TCLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 11B1E9871D932C5500043958 /* TCLoginViewController.m */; };
 		11B1E98C1D93467500043958 /* ACAccountViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 11B1E98B1D93467500043958 /* ACAccountViewModel.m */; };
+		11B1E98F1D9376A000043958 /* TCTwitterPaths.m in Sources */ = {isa = PBXBuildFile; fileRef = 11B1E98E1D9376A000043958 /* TCTwitterPaths.m */; };
+		11B1E9911D93777400043958 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 11B1E9901D93777400043958 /* Social.framework */; };
+		11B1E9931D937FB500043958 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 11B1E9921D937FB500043958 /* Accounts.framework */; };
+		11B1E9961D9389E800043958 /* TCCoreDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 11B1E9951D9389E800043958 /* TCCoreDataManager.m */; };
+		11B1E9991D938D3000043958 /* TCTwittViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 11B1E9981D938D3000043958 /* TCTwittViewModel.m */; };
 		9114C91458400061430E5C0E /* libPods-Twitter clientTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DDDB19CFA601B269C0A4D9E /* libPods-Twitter clientTests.a */; };
 /* End PBXBuildFile section */
 
@@ -50,6 +55,14 @@
 		11B1E9871D932C5500043958 /* TCLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCLoginViewController.m; sourceTree = "<group>"; };
 		11B1E98A1D93467500043958 /* ACAccountViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACAccountViewModel.h; sourceTree = "<group>"; };
 		11B1E98B1D93467500043958 /* ACAccountViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ACAccountViewModel.m; sourceTree = "<group>"; };
+		11B1E98D1D9376A000043958 /* TCTwitterPaths.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCTwitterPaths.h; sourceTree = "<group>"; };
+		11B1E98E1D9376A000043958 /* TCTwitterPaths.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCTwitterPaths.m; sourceTree = "<group>"; };
+		11B1E9901D93777400043958 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
+		11B1E9921D937FB500043958 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
+		11B1E9941D9389E800043958 /* TCCoreDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCCoreDataManager.h; sourceTree = "<group>"; };
+		11B1E9951D9389E800043958 /* TCCoreDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCCoreDataManager.m; sourceTree = "<group>"; };
+		11B1E9971D938D3000043958 /* TCTwittViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCTwittViewModel.h; sourceTree = "<group>"; };
+		11B1E9981D938D3000043958 /* TCTwittViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCTwittViewModel.m; sourceTree = "<group>"; };
 		1C09AEB23B965B2F1A37A035 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		2DDDB19CFA601B269C0A4D9E /* libPods-Twitter clientTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Twitter clientTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		393ECA9B44633DAAEB909A55 /* Pods-Twitter clientTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Twitter clientTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Twitter clientTests/Pods-Twitter clientTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -63,6 +76,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				11B1E9931D937FB500043958 /* Accounts.framework in Frameworks */,
+				11B1E9911D93777400043958 /* Social.framework in Frameworks */,
 				01330D670DAD61B1BEA7EAD5 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -115,6 +130,12 @@
 				1139D7AD1D9327D10017851C /* Supporting Files */,
 				11B1E98A1D93467500043958 /* ACAccountViewModel.h */,
 				11B1E98B1D93467500043958 /* ACAccountViewModel.m */,
+				11B1E98D1D9376A000043958 /* TCTwitterPaths.h */,
+				11B1E98E1D9376A000043958 /* TCTwitterPaths.m */,
+				11B1E9941D9389E800043958 /* TCCoreDataManager.h */,
+				11B1E9951D9389E800043958 /* TCCoreDataManager.m */,
+				11B1E9971D938D3000043958 /* TCTwittViewModel.h */,
+				11B1E9981D938D3000043958 /* TCTwittViewModel.m */,
 			);
 			path = "Twitter client";
 			sourceTree = "<group>";
@@ -139,6 +160,8 @@
 		41B7BA4B1D7BB47EFCC1D5BC /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				11B1E9921D937FB500043958 /* Accounts.framework */,
+				11B1E9901D93777400043958 /* Social.framework */,
 				B70BDDE0764B471DC199CC5B /* libPods.a */,
 				2DDDB19CFA601B269C0A4D9E /* libPods-Twitter clientTests.a */,
 			);
@@ -358,7 +381,10 @@
 				1139D7BB1D9327D10017851C /* Twitter_client.xcdatamodeld in Sources */,
 				1139D7B51D9327D10017851C /* TCFeedViewController.m in Sources */,
 				11B1E98C1D93467500043958 /* ACAccountViewModel.m in Sources */,
+				11B1E9961D9389E800043958 /* TCCoreDataManager.m in Sources */,
 				11B1E9881D932C5500043958 /* TCLoginViewController.m in Sources */,
+				11B1E98F1D9376A000043958 /* TCTwitterPaths.m in Sources */,
+				11B1E9991D938D3000043958 /* TCTwittViewModel.m in Sources */,
 				1139D7B21D9327D10017851C /* AppDelegate.m in Sources */,
 				1139D7AF1D9327D10017851C /* main.m in Sources */,
 			);
