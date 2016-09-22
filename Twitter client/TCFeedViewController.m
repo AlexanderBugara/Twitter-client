@@ -147,4 +147,12 @@
   [self presentViewController:accountSelection animated:YES completion:nil];
 }
 
+- (IBAction)presentTwittSubmitter:(id)sender {
+  
+  if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter]) {
+    SLComposeViewController *composerViewController = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeTwitter];
+    [self presentViewController:composerViewController animated:YES completion:nil];
+  }
+  
+}
 @end

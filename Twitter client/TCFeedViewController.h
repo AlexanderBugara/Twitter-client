@@ -12,6 +12,7 @@
 
 @interface TCFeedViewController : UITableViewController
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *logInButton;
+- (IBAction)presentTwittSubmitter:(id)sender;
 
 @end
 
