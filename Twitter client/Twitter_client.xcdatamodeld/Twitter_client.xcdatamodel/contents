@@ -1,4 +1,25 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model name="Test1.xcdatamodel" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1" systemVersion="11A491" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
-    <elements/>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="11232" systemVersion="16A320" minimumToolsVersion="Xcode 8.0" sourceLanguage="Objective-C" userDefinedModelVersionIdentifier="">
+    <entity name="Account" representedClassName="Account" syncable="YES" codeGenerationType="class">
+        <attribute name="identifier" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="username" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="twitts" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Twitt" inverseName="account" inverseEntity="Twitt" syncable="YES"/>
+    </entity>
+    <entity name="Twitt" representedClassName="Twitt" syncable="YES" codeGenerationType="class">
+        <attribute name="text" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="account" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Account" inverseName="twitts" inverseEntity="Account" syncable="YES"/>
+        <relationship name="user" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="User" inverseName="twitt" inverseEntity="User" syncable="YES"/>
+    </entity>
+    <entity name="User" representedClassName="User" syncable="YES" codeGenerationType="class">
+        <attribute name="id_" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="image" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="profile_image_url" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="screen_name" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="twitt" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Twitt" inverseName="user" inverseEntity="Twitt" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="Account" positionX="-243" positionY="-88" width="128" height="88"/>
+        <element name="Twitt" positionX="-90" positionY="-90" width="128" height="88"/>
+        <element name="User" positionX="72" positionY="-90" width="128" height="118"/>
+    </elements>
 </model>

@@ -96,6 +96,7 @@
 		1139D7A11D9327D00017851C = {
 			isa = PBXGroup;
 			children = (
+				11C9CA341D94BFBF00FAFC25 /* Core data */,
 				1139D7AC1D9327D10017851C /* Twitter client */,
 				1139D7C91D9327D10017851C /* Twitter clientTests */,
 				1139D7AB1D9327D00017851C /* Products */,
@@ -126,7 +127,6 @@
 				1139D7BC1D9327D10017851C /* Assets.xcassets */,
 				1139D7BE1D9327D10017851C /* LaunchScreen.storyboard */,
 				1139D7C11D9327D10017851C /* Info.plist */,
-				1139D7B91D9327D10017851C /* Twitter_client.xcdatamodeld */,
 				1139D7AD1D9327D10017851C /* Supporting Files */,
 				11B1E98A1D93467500043958 /* ACAccountViewModel.h */,
 				11B1E98B1D93467500043958 /* ACAccountViewModel.m */,
@@ -155,6 +155,14 @@
 				1139D7CC1D9327D10017851C /* Info.plist */,
 			);
 			path = "Twitter clientTests";
+			sourceTree = "<group>";
+		};
+		11C9CA341D94BFBF00FAFC25 /* Core data */ = {
+			isa = PBXGroup;
+			children = (
+				1139D7B91D9327D10017851C /* Twitter_client.xcdatamodeld */,
+			);
+			name = "Core data";
 			sourceTree = "<group>";
 		};
 		41B7BA4B1D7BB47EFCC1D5BC /* Frameworks */ = {
@@ -611,7 +619,8 @@
 				1139D7BA1D9327D10017851C /* Twitter_client.xcdatamodel */,
 			);
 			currentVersion = 1139D7BA1D9327D10017851C /* Twitter_client.xcdatamodel */;
-			path = Twitter_client.xcdatamodeld;
+			name = Twitter_client.xcdatamodeld;
+			path = "Twitter client/Twitter_client.xcdatamodeld";
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};

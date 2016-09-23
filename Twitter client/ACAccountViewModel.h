@@ -14,4 +14,5 @@
 - (NSString *)userName;
 - (id)initWithAccount:(ACAccount *)account;
 - (ACAccount *)account;
+- (NSString *)identifier;
 @end

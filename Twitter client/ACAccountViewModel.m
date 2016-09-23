@@ -31,4 +31,7 @@
   return _account;
 }
 
+- (NSString *)identifier {
+  return self.account.identifier;
+}
 @end

@@ -19,6 +19,6 @@
 @interface TCFeedViewModel : NSObject
 @property (nonatomic, strong) NSString *navigationItemTitle;
 @property (nonatomic, strong) NSArray *accounts;
-- (void)setAccauntViewModel:(ACAccountViewModel *)accountViewModel;
+- (void)setAccountViewModel:(ACAccountViewModel *)accountViewModel;
 @end
 

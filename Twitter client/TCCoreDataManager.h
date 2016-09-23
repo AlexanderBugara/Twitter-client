@@ -8,7 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
+@class ACAccountViewModel;
+
 @interface TCCoreDataManager : NSObject
-- (id)initWithTwitterFeed:(id)twitterFeed;
-- (void)start;
+- (id)initWithTwitterFeed:(id)twitterFeed forAccount:(ACAccountViewModel *)accountViewModel;
+- (NSArray *)start;
 @end

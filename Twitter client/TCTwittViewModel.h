@@ -8,6 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
+@class Twitt, NSManagedObjectContext, Account;
+
 @interface TCTwittViewModel : NSObject
-- (id)initWithTitle:(NSString *)title imagePath:(NSString *)imagePath;
+- (id)initWithJson:(NSDictionary *)json
+           account:(Account *)account
+managedObjectContext:(NSManagedObjectContext *)managedObjectContext;
+- (Twitt *)twitt;
 @end

@@ -14,6 +14,7 @@
 #import <Social/Social.h>
 #import "TCCoreDataManager.h"
 
+
 @interface TCFeedViewModel ()
 @property (nonatomic, strong) ACAccountStore *accountStore;
 @property (nonatomic, strong) ACAccountViewModel *selectedAccountViewModel;
@@ -27,8 +28,8 @@
   __weak __typeof (self) weakSelf = self;
   [self.accountStore requestAccessToAccountsWithType:[self accountType] options:nil completion:^(BOOL granted, NSError *error) {
     if (granted) {
-      NSArray *accaunts = [weakSelf.accountStore accountsWithAccountType:[weakSelf accountType]];
-      weakSelf.accounts = [self viewModelsForAccounts:accaunts];
+      NSArray *accounts = [weakSelf.accountStore accountsWithAccountType:[weakSelf accountType]];
+      weakSelf.accounts = [self viewModelsForAccounts:accounts];
       
     } else {
       
@@ -59,7 +60,7 @@
   return [self.accountStore accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter];
 }
 
-- (void)setAccauntViewModel:(ACAccountViewModel *)accountViewModel {
+- (void)setAccountViewModel:(ACAccountViewModel *)accountViewModel {
   _selectedAccountViewModel = accountViewModel;
   [self setNavigationItemTitle:accountViewModel.userName];
 }
@@ -72,8 +73,9 @@
   feedRequest.account = [weakSelf account];
   [feedRequest performRequestWithHandler:^(NSData *responseData, NSHTTPURLResponse *urlResponse, NSError *error) {
     id responseJson = [weakSelf jsonFromData:responseData];
-    TCCoreDataManager *coreDataManager = [[TCCoreDataManager alloc] initWithTwitterFeed:responseJson];
-    [coreDataManager start];
+    TCCoreDataManager *coreDataManager = [[TCCoreDataManager alloc] initWithTwitterFeed:responseJson forAccount:self.selectedAccountViewModel];
+    weakSelf.twitts = [coreDataManager start];
+    
   }];
 
 }
@@ -143,7 +145,7 @@
   __weak __typeof (self) weakSelf = self;
   for (ACAccountViewModel *viewModel in accounts) {
     [accountSelection addAction:[self actionWithTitle:viewModel.userName handler:^{
-      [weakSelf.viewModel setAccauntViewModel:viewModel];
+      [weakSelf.viewModel setAccountViewModel:viewModel];
       [weakSelf.viewModel downloadTwitterFeed];
     }]];
   }
