@@ -15,7 +15,11 @@
 		1139D7BB1D9327D10017851C /* Twitter_client.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1139D7B91D9327D10017851C /* Twitter_client.xcdatamodeld */; };
 		1139D7BD1D9327D10017851C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1139D7BC1D9327D10017851C /* Assets.xcassets */; };
 		1139D7C01D9327D10017851C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1139D7BE1D9327D10017851C /* LaunchScreen.storyboard */; };
-		1139D7CB1D9327D10017851C /* Twitter_clientTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1139D7CA1D9327D10017851C /* Twitter_clientTests.m */; };
+		117984291D95224E008D0535 /* CETableViewBindingHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 117984281D95224E008D0535 /* CETableViewBindingHelper.m */; };
+		1179842D1D952274008D0535 /* TCTwitterCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1179842B1D952274008D0535 /* TCTwitterCell.m */; };
+		1179842E1D952274008D0535 /* TCTwitterCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1179842C1D952274008D0535 /* TCTwitterCell.xib */; };
+		117984311D9523C5008D0535 /* CEObservableMutableArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 117984301D9523C5008D0535 /* CEObservableMutableArray.m */; };
+		117984361D9576DC008D0535 /* TCFeedViewModelSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 117984351D9576DC008D0535 /* TCFeedViewModelSpec.m */; };
 		11B1E9881D932C5500043958 /* TCLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 11B1E9871D932C5500043958 /* TCLoginViewController.m */; };
 		11B1E98C1D93467500043958 /* ACAccountViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 11B1E98B1D93467500043958 /* ACAccountViewModel.m */; };
 		11B1E98F1D9376A000043958 /* TCTwitterPaths.m in Sources */ = {isa = PBXBuildFile; fileRef = 11B1E98E1D9376A000043958 /* TCTwitterPaths.m */; };
@@ -49,8 +53,16 @@
 		1139D7BF1D9327D10017851C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1139D7C11D9327D10017851C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1139D7C61D9327D10017851C /* Twitter clientTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Twitter clientTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		1139D7CA1D9327D10017851C /* Twitter_clientTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Twitter_clientTests.m; sourceTree = "<group>"; };
 		1139D7CC1D9327D10017851C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		117984261D95224E008D0535 /* CEReactiveView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CEReactiveView.h; sourceTree = "<group>"; };
+		117984271D95224E008D0535 /* CETableViewBindingHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CETableViewBindingHelper.h; sourceTree = "<group>"; };
+		117984281D95224E008D0535 /* CETableViewBindingHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CETableViewBindingHelper.m; sourceTree = "<group>"; };
+		1179842A1D952274008D0535 /* TCTwitterCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCTwitterCell.h; sourceTree = "<group>"; };
+		1179842B1D952274008D0535 /* TCTwitterCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCTwitterCell.m; sourceTree = "<group>"; };
+		1179842C1D952274008D0535 /* TCTwitterCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TCTwitterCell.xib; sourceTree = "<group>"; };
+		1179842F1D9523C5008D0535 /* CEObservableMutableArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CEObservableMutableArray.h; sourceTree = "<group>"; };
+		117984301D9523C5008D0535 /* CEObservableMutableArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CEObservableMutableArray.m; sourceTree = "<group>"; };
+		117984351D9576DC008D0535 /* TCFeedViewModelSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCFeedViewModelSpec.m; sourceTree = "<group>"; };
 		11B1E9861D932C5500043958 /* TCLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCLoginViewController.h; sourceTree = "<group>"; };
 		11B1E9871D932C5500043958 /* TCLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCLoginViewController.m; sourceTree = "<group>"; };
 		11B1E98A1D93467500043958 /* ACAccountViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACAccountViewModel.h; sourceTree = "<group>"; };
@@ -136,6 +148,14 @@
 				11B1E9951D9389E800043958 /* TCCoreDataManager.m */,
 				11B1E9971D938D3000043958 /* TCTwittViewModel.h */,
 				11B1E9981D938D3000043958 /* TCTwittViewModel.m */,
+				117984261D95224E008D0535 /* CEReactiveView.h */,
+				117984271D95224E008D0535 /* CETableViewBindingHelper.h */,
+				117984281D95224E008D0535 /* CETableViewBindingHelper.m */,
+				1179842A1D952274008D0535 /* TCTwitterCell.h */,
+				1179842B1D952274008D0535 /* TCTwitterCell.m */,
+				1179842C1D952274008D0535 /* TCTwitterCell.xib */,
+				1179842F1D9523C5008D0535 /* CEObservableMutableArray.h */,
+				117984301D9523C5008D0535 /* CEObservableMutableArray.m */,
 			);
 			path = "Twitter client";
 			sourceTree = "<group>";
@@ -151,8 +171,8 @@
 		1139D7C91D9327D10017851C /* Twitter clientTests */ = {
 			isa = PBXGroup;
 			children = (
-				1139D7CA1D9327D10017851C /* Twitter_clientTests.m */,
 				1139D7CC1D9327D10017851C /* Info.plist */,
+				117984351D9576DC008D0535 /* TCFeedViewModelSpec.m */,
 			);
 			path = "Twitter clientTests";
 			sourceTree = "<group>";
@@ -275,6 +295,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1179842E1D952274008D0535 /* TCTwitterCell.xib in Resources */,
 				1139D7C01D9327D10017851C /* LaunchScreen.storyboard in Resources */,
 				1139D7BD1D9327D10017851C /* Assets.xcassets in Resources */,
 				1139D7B81D9327D10017851C /* Main.storyboard in Resources */,
@@ -395,8 +416,11 @@
 				11B1E9881D932C5500043958 /* TCLoginViewController.m in Sources */,
 				11B1E98F1D9376A000043958 /* TCTwitterPaths.m in Sources */,
 				11B1E9991D938D3000043958 /* TCTwittViewModel.m in Sources */,
+				117984291D95224E008D0535 /* CETableViewBindingHelper.m in Sources */,
 				1139D7B21D9327D10017851C /* AppDelegate.m in Sources */,
+				1179842D1D952274008D0535 /* TCTwitterCell.m in Sources */,
 				1139D7AF1D9327D10017851C /* main.m in Sources */,
+				117984311D9523C5008D0535 /* CEObservableMutableArray.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -404,7 +428,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1139D7CB1D9327D10017851C /* Twitter_clientTests.m in Sources */,
+				117984361D9576DC008D0535 /* TCFeedViewModelSpec.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

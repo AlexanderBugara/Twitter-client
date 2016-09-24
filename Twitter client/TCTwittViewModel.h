@@ -15,4 +15,7 @@
            account:(Account *)account
 managedObjectContext:(NSManagedObjectContext *)managedObjectContext;
 - (Twitt *)twitt;
+
+@property (nonatomic, strong) NSString *username;
+@property (nonatomic, strong) NSString *text;
 @end

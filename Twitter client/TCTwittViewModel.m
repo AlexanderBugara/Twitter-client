@@ -31,6 +31,9 @@ managedObjectContext:(NSManagedObjectContext *)managedObjectContext {
     _twitt.text = json[@"text"];
     _twitt.user = [self authorWithJson:json[@"user"] managedObjectContext:managedObjectContext];
     [account addTwittsObject:_twitt];
+    
+    _text = _twitt.text;
+    _username = _twitt.user.screen_name;
   }
   return self;
 }
@@ -45,5 +48,14 @@ managedObjectContext:(NSManagedObjectContext *)managedObjectContext {
   user.screen_name = json[@"screen_name"];
   return user;
 }
+
+
+//- (NSString *)username {
+//  return self.twitt.user.screen_name;
+//}
+//
+//- (NSString *)text {
+//  return self.twitt.text;
+//}
 
 @end

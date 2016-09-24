@@ -13,7 +13,7 @@
 #import "TCTwitterPaths.h"
 #import <Social/Social.h>
 #import "TCCoreDataManager.h"
-
+#import "CETableViewBindingHelper.h"
 
 @interface TCFeedViewModel ()
 @property (nonatomic, strong) ACAccountStore *accountStore;
@@ -85,6 +85,9 @@
 }
 
 - (id)jsonFromData:(NSData *)data {
+  
+  if (!data) return nil;
+  
   NSError *error;
   return [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
 }
@@ -122,6 +125,12 @@
   RAC(self_weak_, navigationItem.title) = [RACObserve(self_weak_, viewModel.navigationItemTitle) deliverOnMainThread];
   RAC(self_weak_, accounts) = [RACObserve(self_weak_, viewModel.accounts) deliverOnMainThread];
   RAC(self_weak_, twitts) = [RACObserve(self_weak_, viewModel.twitts) deliverOnMainThread];
+  
+  UINib *nib = [UINib nibWithNibName:@"TCTwitterCell" bundle:nil];
+  [CETableViewBindingHelper bindingHelperForTableView:self.tableView
+                                          sourceSignal:RACObserve(self.viewModel, twitts)
+                                      selectionCommand:nil
+                                          templateCell:nib];
 }
 
 - (UIAlertAction *)actionWithTitle:(NSString *)title
