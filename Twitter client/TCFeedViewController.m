@@ -74,7 +74,8 @@
   [feedRequest performRequestWithHandler:^(NSData *responseData, NSHTTPURLResponse *urlResponse, NSError *error) {
     id responseJson = [weakSelf jsonFromData:responseData];
     TCCoreDataManager *coreDataManager = [[TCCoreDataManager alloc] initWithTwitterFeed:responseJson forAccount:self.selectedAccountViewModel];
-    self.twitts = [coreDataManager start];
+    [coreDataManager start];
+    self.twitts = [coreDataManager twitts];
   }];
 
 }

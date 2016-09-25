@@ -12,5 +12,6 @@
 
 @interface TCCoreDataManager : NSObject
 - (id)initWithTwitterFeed:(id)twitterFeed forAccount:(ACAccountViewModel *)accountViewModel;
-- (CEObservableMutableArray *)start;
+- (void)start;
+- (CEObservableMutableArray *)twitts;
 @end

@@ -8,11 +8,10 @@
 
 #import "TCCoreDataManager.h"
 #import "TCTwittViewModel.h"
-#import "Account+CoreDataClass.h"
 #import "AppDelegate.h"
 #import "Twitt+CoreDataClass.h"
 #import "ACAccountViewModel.h"
-#import "CEObservableMutableArray.h"
+#import "Account+CoreDataClass.h"
 
 @interface TCCoreDataManager ()
 @property (nonatomic, strong) id twitterFeed;
@@ -29,15 +28,13 @@
   return self;
 }
 
-- (CEObservableMutableArray *)start {
+- (void)start {
   @try {
-    Account *account = [self currentAccount];
-    CEObservableMutableArray *result = [CEObservableMutableArray new];
     for (NSDictionary *item in [self feedArray]) {
-      TCTwittViewModel *twittModel = [[TCTwittViewModel alloc] initWithJson:item account:account managedObjectContext:[self managedObjectContext]];
-      [result addObject:twittModel];
+      TCTwittViewModel *twittModel = [[TCTwittViewModel alloc] initWithJson:item managedObjectContext:[self managedObjectContext]];
+      [self.accountViewModel addTwittViewModel:twittModel];
     }
-    return result;
+    [self.accountViewModel saveContext];
   } @catch (NSException *exception) {
     
   } @finally {
@@ -54,28 +51,11 @@
   return result;
 }
 
-- (Account *)currentAccount {
-  NSFetchRequest *fetchRequest = [Account fetchRequest];
-  NSPredicate *predicate = [NSPredicate predicateWithFormat:@"identifier == %@",[self.accountViewModel identifier]];
-  fetchRequest.predicate = predicate;
-  NSError *error;
-  NSArray *accounts = [fetchRequest execute:&error];
-  
-  Account *result = nil;
-  if ([accounts count] > 0) {
-    result = accounts[0];
-  } else {
-    NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"Account" inManagedObjectContext:[self managedObjectContext]];
-    result = [[Account alloc] initWithEntity:entityDescription insertIntoManagedObjectContext:[self managedObjectContext]];
-    
-    result.username = [self.accountViewModel userName];
-    result.identifier = [self.accountViewModel identifier];
-    
-  }
-  return result;
-}
-
 - (NSManagedObjectContext *)managedObjectContext {
   return [(AppDelegate *)[UIApplication sharedApplication].delegate managedObjectContext];
+}
+
+- (CEObservableMutableArray *)twitts {
+  return [self.accountViewModel twitts];
 }
 @end

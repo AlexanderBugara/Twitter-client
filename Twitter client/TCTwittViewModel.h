@@ -12,7 +12,6 @@
 
 @interface TCTwittViewModel : NSObject
 - (id)initWithJson:(NSDictionary *)json
-           account:(Account *)account
 managedObjectContext:(NSManagedObjectContext *)managedObjectContext;
 - (Twitt *)twitt;
 

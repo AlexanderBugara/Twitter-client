@@ -17,7 +17,7 @@
 
 SPEC_BEGIN(TCFeedViewModelSpec)
 
-describe(@"testing... TCFeedViewController", ^{
+describe(@"testing... TCFeedViewModel", ^{
   context(@"When got twitter feed data and convert it to JSON", ^{
     TCFeedViewModel *feedViewModel = [[TCFeedViewModel alloc] init];
     it(@"it returns nil", ^{

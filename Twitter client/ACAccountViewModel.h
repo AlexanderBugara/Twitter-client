@@ -8,11 +8,15 @@
 
 #import <Foundation/Foundation.h>
 
-@class ACAccount;
+@class ACAccount, Account, NSManagedObjectContext, TCTwittViewModel, CEObservableMutableArray;
 
 @interface ACAccountViewModel : NSObject
 - (NSString *)userName;
 - (id)initWithAccount:(ACAccount *)account;
 - (ACAccount *)account;
 - (NSString *)identifier;
+- (Account *)accountWithContext:(NSManagedObjectContext *)managedOjectContext;
+- (void)addTwittViewModel:(TCTwittViewModel *)twittViewModel;
+- (CEObservableMutableArray *)twitts;
+- (void)saveContext;
 @end
