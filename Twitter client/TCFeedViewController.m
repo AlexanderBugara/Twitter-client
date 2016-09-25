@@ -33,8 +33,10 @@
   __weak __typeof (self) weakSelf = self;
   [self.accountStore requestAccessToAccountsWithType:[self accountType] options:nil completion:^(BOOL granted, NSError *error) {
     if (granted) {
-      NSArray *accounts = [weakSelf.accountStore accountsWithAccountType:[weakSelf accountType]];
-      weakSelf.accounts = [self viewModelsForAccounts:accounts];
+      dispatch_sync(dispatch_get_main_queue(), ^{
+        NSArray *accounts = [weakSelf.accountStore accountsWithAccountType:[weakSelf accountType]];
+        weakSelf.accounts = [self viewModelsForAccounts:accounts];
+      });
       
     } else {
       

@@ -33,30 +33,11 @@
                     </navigationItem>
                     <connections>
                         <outlet property="logInButton" destination="Ila-vK-G57" id="Jhu-pD-SiK"/>
-                        <segue destination="KY4-nh-JnD" kind="presentation" identifier="loginsegue" id="10f-NO-wRl"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kJK-rR-a50" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="948" y="114"/>
-        </scene>
-        <!--Login View Controller-->
-        <scene sceneID="YOD-bO-MJx">
-            <objects>
-                <viewController id="KY4-nh-JnD" customClass="TCLoginViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="0pC-3G-r5f"/>
-                        <viewControllerLayoutGuide type="bottom" id="C5g-zf-hTQ"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="QEs-Ji-lBS">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="oHt-pF-Nxi" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1638" y="136"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="xVn-q6-398">
@@ -74,7 +55,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4B5-5g-t0k" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="80" y="796"/>
+            <point key="canvasLocation" x="105" y="114"/>
         </scene>
     </scenes>
 </document>
