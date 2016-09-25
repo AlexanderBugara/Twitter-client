@@ -27,6 +27,7 @@
 - (id)initWithAccount:(ACAccount *)account {
   if (self = [super init]) {
     _account = account;
+    _managedObjectAccount = [self accountWithContext:[self managedObjectContext]];
     _twitts = [[CEObservableMutableArray alloc] init];
   }
   return self;
@@ -45,7 +46,7 @@
 }
 
 
-- (Account *)fetch:(NSManagedObjectContext *)managedOjectContext {
+- (Account *)fetchAccount:(NSManagedObjectContext *)managedOjectContext {
   
   Account *result = nil;
   
@@ -74,7 +75,7 @@
 }
 
 - (Account *)accountWithContext:(NSManagedObjectContext *)managedOjectContext {
-    Account *result = [self fetch:managedOjectContext];
+    Account *result = [self fetchAccount:managedOjectContext];
     if (!result) {
       result = [self createAccount:managedOjectContext];
       [self saveContext];
@@ -97,4 +98,19 @@
   [(AppDelegate *)[UIApplication sharedApplication].delegate saveContext];
 }
 
+- (void)extractOfflineTwitts {
+  
+  CEObservableMutableArray *result = [CEObservableMutableArray new];
+  NSArray *array = [self.managedObjectAccount.twitts allObjects];
+  for (Twitt *twitt in array) {
+    TCTwittViewModel *twittViewModel = [[TCTwittViewModel alloc] initWithTwitt:twitt];
+    [result addObject:twittViewModel];
+  }
+  self.twitts = result;
+  
+}
+
+- (NSManagedObjectContext *)managedObjectContext {
+  return [(AppDelegate *)[UIApplication sharedApplication].delegate managedObjectContext];
+}
 @end

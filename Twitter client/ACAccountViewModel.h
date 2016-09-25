@@ -19,4 +19,5 @@
 - (void)addTwittViewModel:(TCTwittViewModel *)twittViewModel;
 - (CEObservableMutableArray *)twitts;
 - (void)saveContext;
+- (void)extractOfflineTwitts;
 @end

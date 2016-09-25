@@ -15,10 +15,15 @@
 #import "TCCoreDataManager.h"
 #import "CETableViewBindingHelper.h"
 #import "CEObservableMutableArray.h"
+#import "Reachability.h"
+#import "TCFeedOnlineFetch.h"
+#import "AppDelegate.h"
+#import "TCTwittViewModel.h"
 
 @interface TCFeedViewModel ()
 @property (nonatomic, strong) ACAccountStore *accountStore;
 @property (nonatomic, strong) ACAccountViewModel *selectedAccountViewModel;
+@property (assign) BOOL isOfflineMode;
 @end
 
 @implementation TCFeedViewModel
@@ -65,31 +70,36 @@
   [self setNavigationItemTitle:accountViewModel.userName];
 }
 
-- (void)downloadTwitterFeed {
-  __weak __typeof (self) weakSelf = self;
-
-  SLRequest *feedRequest = [SLRequest requestForServiceType:SLServiceTypeTwitter requestMethod:SLRequestMethodGET URL:[NSURL URLWithString:[TCTwitterPaths feedPath]] parameters:@{@"count" : @"50", @"screen_name" : weakSelf.selectedAccountViewModel.userName}];
-  
-  feedRequest.account = [weakSelf account];
-  [feedRequest performRequestWithHandler:^(NSData *responseData, NSHTTPURLResponse *urlResponse, NSError *error) {
-    id responseJson = [weakSelf jsonFromData:responseData];
-    TCCoreDataManager *coreDataManager = [[TCCoreDataManager alloc] initWithTwitterFeed:responseJson forAccount:self.selectedAccountViewModel];
-    [coreDataManager start];
-    self.twitts = [coreDataManager twitts];
-  }];
-
+- (BOOL)isNetworkReachable {
+  NetworkStatus networkStatus = [[Reachability reachabilityForInternetConnection] currentReachabilityStatus];
+  return (networkStatus == ReachableViaWiFi || networkStatus == ReachableViaWWAN);
 }
 
-- (ACAccount *)account {
-  return [self.selectedAccountViewModel account];
+- (void)pullFeed {
+  if ([self isNetworkReachable]) {
+    
+    [self clearFeed];
+    
+    __weak __typeof (self) weakSelf = self;
+    [TCFeedOnlineFetch fetchWith:self.selectedAccountViewModel complitionHandler:^(CEObservableMutableArray *result) {
+      weakSelf.twitts = result;
+    }];
+  } else {
+    [self.selectedAccountViewModel extractOfflineTwitts];
+    self.twitts = [self.selectedAccountViewModel twitts];
+  }
 }
 
-- (id)jsonFromData:(NSData *)data {
-  
-  if (!data) return nil;
-  
-  NSError *error;
-  return [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
+- (void)clearFeed {  
+  for (TCTwittViewModel *twitterViewModel in self.twitts) {
+    [twitterViewModel markAsDeleteTwitt];
+  }
+  [self.twitts removeAllObjects];
+  [self saveManagedObgectContext];
+}
+
+- (void)saveManagedObgectContext {
+  [(AppDelegate *)[UIApplication sharedApplication].delegate saveContext];
 }
 
 @end
@@ -129,6 +139,21 @@
                                           sourceSignal:[RACObserve(_viewModel, twitts) deliverOnMainThread]
                                       selectionCommand:nil
                                           templateCell:nib];
+  
+  UIRefreshControl *refresh = [[UIRefreshControl alloc] init];
+  refresh.tintColor = [UIColor grayColor];
+  refresh.attributedTitle = [[NSAttributedString alloc] initWithString:@"Pull to Refresh"];
+  [refresh addTarget:self action:@selector(pullToRefreshAction:) forControlEvents:UIControlEventValueChanged];
+  self.refreshControl = refresh;
+  
+}
+
+- (void)pullToRefreshAction:(id)sender {
+  @weakify(self);
+  [RACObserve(_viewModel, twitts) subscribeNext:^(id x) {
+    [self_weak_.refreshControl endRefreshing];
+  }];
+  [self.viewModel pullFeed];
 }
 
 - (UIAlertAction *)actionWithTitle:(NSString *)title
@@ -153,7 +178,7 @@
   for (ACAccountViewModel *viewModel in accounts) {
     [accountSelection addAction:[self actionWithTitle:viewModel.userName handler:^{
       [weakSelf.viewModel setAccountViewModel:viewModel];
-      [weakSelf.viewModel downloadTwitterFeed];
+      [weakSelf.viewModel pullFeed];
     }]];
   }
   [self presentViewController:accountSelection animated:YES completion:nil];

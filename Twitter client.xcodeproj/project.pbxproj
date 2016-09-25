@@ -20,7 +20,9 @@
 		1179842E1D952274008D0535 /* TCTwitterCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1179842C1D952274008D0535 /* TCTwitterCell.xib */; };
 		117984311D9523C5008D0535 /* CEObservableMutableArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 117984301D9523C5008D0535 /* CEObservableMutableArray.m */; };
 		117984361D9576DC008D0535 /* TCFeedViewModelSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 117984351D9576DC008D0535 /* TCFeedViewModelSpec.m */; };
-		1179843B1D976E61008D0535 /* TCCoreDataManagerSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 1179843A1D976E61008D0535 /* TCCoreDataManagerSpec.m */; };
+		1179843D1D97DA2C008D0535 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1179843C1D97DA2C008D0535 /* SystemConfiguration.framework */; };
+		117984401D97E443008D0535 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 1179843F1D97E443008D0535 /* Reachability.m */; };
+		117984461D97F0E7008D0535 /* TCFeedOnlineFetch.m in Sources */ = {isa = PBXBuildFile; fileRef = 117984451D97F0E7008D0535 /* TCFeedOnlineFetch.m */; };
 		11B1E9881D932C5500043958 /* TCLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 11B1E9871D932C5500043958 /* TCLoginViewController.m */; };
 		11B1E98C1D93467500043958 /* ACAccountViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 11B1E98B1D93467500043958 /* ACAccountViewModel.m */; };
 		11B1E98F1D9376A000043958 /* TCTwitterPaths.m in Sources */ = {isa = PBXBuildFile; fileRef = 11B1E98E1D9376A000043958 /* TCTwitterPaths.m */; };
@@ -64,7 +66,11 @@
 		1179842F1D9523C5008D0535 /* CEObservableMutableArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CEObservableMutableArray.h; sourceTree = "<group>"; };
 		117984301D9523C5008D0535 /* CEObservableMutableArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CEObservableMutableArray.m; sourceTree = "<group>"; };
 		117984351D9576DC008D0535 /* TCFeedViewModelSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCFeedViewModelSpec.m; sourceTree = "<group>"; };
-		1179843A1D976E61008D0535 /* TCCoreDataManagerSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCCoreDataManagerSpec.m; sourceTree = "<group>"; };
+		1179843C1D97DA2C008D0535 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		1179843E1D97E443008D0535 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		1179843F1D97E443008D0535 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
+		117984441D97F0E7008D0535 /* TCFeedOnlineFetch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCFeedOnlineFetch.h; sourceTree = "<group>"; };
+		117984451D97F0E7008D0535 /* TCFeedOnlineFetch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCFeedOnlineFetch.m; sourceTree = "<group>"; };
 		11B1E9861D932C5500043958 /* TCLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCLoginViewController.h; sourceTree = "<group>"; };
 		11B1E9871D932C5500043958 /* TCLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCLoginViewController.m; sourceTree = "<group>"; };
 		11B1E98A1D93467500043958 /* ACAccountViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACAccountViewModel.h; sourceTree = "<group>"; };
@@ -90,6 +96,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1179843D1D97DA2C008D0535 /* SystemConfiguration.framework in Frameworks */,
 				11B1E9931D937FB500043958 /* Accounts.framework in Frameworks */,
 				11B1E9911D93777400043958 /* Social.framework in Frameworks */,
 				01330D670DAD61B1BEA7EAD5 /* libPods.a in Frameworks */,
@@ -131,6 +138,8 @@
 		1139D7AC1D9327D10017851C /* Twitter client */ = {
 			isa = PBXGroup;
 			children = (
+				1179843E1D97E443008D0535 /* Reachability.h */,
+				1179843F1D97E443008D0535 /* Reachability.m */,
 				1139D7B01D9327D10017851C /* AppDelegate.h */,
 				1139D7B11D9327D10017851C /* AppDelegate.m */,
 				1139D7B31D9327D10017851C /* TCFeedViewController.h */,
@@ -158,6 +167,8 @@
 				1179842C1D952274008D0535 /* TCTwitterCell.xib */,
 				1179842F1D9523C5008D0535 /* CEObservableMutableArray.h */,
 				117984301D9523C5008D0535 /* CEObservableMutableArray.m */,
+				117984441D97F0E7008D0535 /* TCFeedOnlineFetch.h */,
+				117984451D97F0E7008D0535 /* TCFeedOnlineFetch.m */,
 			);
 			path = "Twitter client";
 			sourceTree = "<group>";
@@ -175,7 +186,6 @@
 			children = (
 				1139D7CC1D9327D10017851C /* Info.plist */,
 				117984351D9576DC008D0535 /* TCFeedViewModelSpec.m */,
-				1179843A1D976E61008D0535 /* TCCoreDataManagerSpec.m */,
 			);
 			path = "Twitter clientTests";
 			sourceTree = "<group>";
@@ -191,6 +201,7 @@
 		41B7BA4B1D7BB47EFCC1D5BC /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1179843C1D97DA2C008D0535 /* SystemConfiguration.framework */,
 				11B1E9921D937FB500043958 /* Accounts.framework */,
 				11B1E9901D93777400043958 /* Social.framework */,
 				B70BDDE0764B471DC199CC5B /* libPods.a */,
@@ -412,6 +423,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				117984401D97E443008D0535 /* Reachability.m in Sources */,
 				1139D7BB1D9327D10017851C /* Twitter_client.xcdatamodeld in Sources */,
 				1139D7B51D9327D10017851C /* TCFeedViewController.m in Sources */,
 				11B1E98C1D93467500043958 /* ACAccountViewModel.m in Sources */,
@@ -419,6 +431,7 @@
 				11B1E9881D932C5500043958 /* TCLoginViewController.m in Sources */,
 				11B1E98F1D9376A000043958 /* TCTwitterPaths.m in Sources */,
 				11B1E9991D938D3000043958 /* TCTwittViewModel.m in Sources */,
+				117984461D97F0E7008D0535 /* TCFeedOnlineFetch.m in Sources */,
 				117984291D95224E008D0535 /* CETableViewBindingHelper.m in Sources */,
 				1139D7B21D9327D10017851C /* AppDelegate.m in Sources */,
 				1179842D1D952274008D0535 /* TCTwitterCell.m in Sources */,
@@ -431,7 +444,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1179843B1D976E61008D0535 /* TCCoreDataManagerSpec.m in Sources */,
 				117984361D9576DC008D0535 /* TCFeedViewModelSpec.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

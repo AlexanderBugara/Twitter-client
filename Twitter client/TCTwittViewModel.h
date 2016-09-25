@@ -14,6 +14,8 @@
 - (id)initWithJson:(NSDictionary *)json
 managedObjectContext:(NSManagedObjectContext *)managedObjectContext;
 - (Twitt *)twitt;
+- (id)initWithTwitt:(Twitt *)twitt;
+- (void)markAsDeleteTwitt;
 
 @property (nonatomic, strong) NSString *username;
 @property (nonatomic, strong) NSString *text;

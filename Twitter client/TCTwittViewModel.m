@@ -12,6 +12,7 @@
 #import "AppDelegate.h"
 #import "User+CoreDataClass.h"
 #import "Account+CoreDataClass.h"
+#import "AppDelegate.h"
 
 @interface TCTwittViewModel ()
 @property (nonatomic, strong) NSString *title;
@@ -29,9 +30,21 @@ managedObjectContext:(NSManagedObjectContext *)managedObjectContext {
     _twitt = [[Twitt alloc] initWithEntity:[Twitt entity] insertIntoManagedObjectContext:managedObjectContext];
     _twitt.text = json[@"text"];
     _twitt.user = [self authorWithJson:json[@"user"] managedObjectContext:managedObjectContext];
+    _twitt.id_ = [json[@"id"] integerValue];
     _text = _twitt.text;
     _username = _twitt.user.screen_name;
   }
+  return self;
+}
+
+- (id)initWithTwitt:(Twitt *)twitt {
+  
+  if (self = [super init]) {
+    _twitt = twitt;
+    _text = _twitt.text;
+    _username = _twitt.user.screen_name;
+  }
+  
   return self;
 }
 
@@ -46,4 +59,11 @@ managedObjectContext:(NSManagedObjectContext *)managedObjectContext {
   return user;
 }
 
+- (void)markAsDeleteTwitt {
+  [[self managedObjectContext] deleteObject:self.twitt];
+}
+
+- (NSManagedObjectContext *)managedObjectContext {
+  return [(AppDelegate *)[UIApplication sharedApplication].delegate managedObjectContext];
+}
 @end

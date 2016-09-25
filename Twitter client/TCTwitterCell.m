@@ -23,8 +23,8 @@
   
   TCTwittViewModel *twitterViewModel = (TCTwittViewModel *)viewModel;
   
-  RAC(self, username.text) = [RACObserve(twitterViewModel, username) deliverOnMainThread];
-  RAC(self, text.text) = [RACObserve(twitterViewModel, text) deliverOnMainThread];
+  self.username.text = twitterViewModel.username;
+  self.text.text = twitterViewModel.text;
 }
 
 @end
