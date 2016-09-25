@@ -14,11 +14,11 @@
 #import <Social/Social.h>
 #import "TCCoreDataManager.h"
 #import "CETableViewBindingHelper.h"
+#import "CEObservableMutableArray.h"
 
 @interface TCFeedViewModel ()
 @property (nonatomic, strong) ACAccountStore *accountStore;
 @property (nonatomic, strong) ACAccountViewModel *selectedAccountViewModel;
-@property (nonatomic, strong) NSArray *twitts;
 @end
 
 @implementation TCFeedViewModel
@@ -74,8 +74,7 @@
   [feedRequest performRequestWithHandler:^(NSData *responseData, NSHTTPURLResponse *urlResponse, NSError *error) {
     id responseJson = [weakSelf jsonFromData:responseData];
     TCCoreDataManager *coreDataManager = [[TCCoreDataManager alloc] initWithTwitterFeed:responseJson forAccount:self.selectedAccountViewModel];
-    weakSelf.twitts = [coreDataManager start];
-    
+    self.twitts = [coreDataManager start];
   }];
 
 }
@@ -98,7 +97,6 @@
 @interface TCFeedViewController ()
 @property (nonatomic, strong) TCFeedViewModel *viewModel;
 @property (nonatomic, strong) NSArray *accounts;
-@property (nonatomic, strong) NSArray *twitts;
 @end
 
 @implementation TCFeedViewController
@@ -124,11 +122,10 @@
   @weakify(self);
   RAC(self_weak_, navigationItem.title) = [RACObserve(self_weak_, viewModel.navigationItemTitle) deliverOnMainThread];
   RAC(self_weak_, accounts) = [RACObserve(self_weak_, viewModel.accounts) deliverOnMainThread];
-  RAC(self_weak_, twitts) = [RACObserve(self_weak_, viewModel.twitts) deliverOnMainThread];
   
   UINib *nib = [UINib nibWithNibName:@"TCTwitterCell" bundle:nil];
   [CETableViewBindingHelper bindingHelperForTableView:self.tableView
-                                          sourceSignal:RACObserve(self.viewModel, twitts)
+                                          sourceSignal:[RACObserve(_viewModel, twitts) deliverOnMainThread]
                                       selectionCommand:nil
                                           templateCell:nib];
 }

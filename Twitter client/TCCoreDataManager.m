@@ -12,6 +12,7 @@
 #import "AppDelegate.h"
 #import "Twitt+CoreDataClass.h"
 #import "ACAccountViewModel.h"
+#import "CEObservableMutableArray.h"
 
 @interface TCCoreDataManager ()
 @property (nonatomic, strong) id twitterFeed;
@@ -28,10 +29,10 @@
   return self;
 }
 
-- (NSArray *)start {
+- (CEObservableMutableArray *)start {
   @try {
     Account *account = [self currentAccount];
-    NSMutableArray *result = [NSMutableArray array];
+    CEObservableMutableArray *result = [CEObservableMutableArray new];
     for (NSDictionary *item in [self feedArray]) {
       TCTwittViewModel *twittModel = [[TCTwittViewModel alloc] initWithJson:item account:account managedObjectContext:[self managedObjectContext]];
       [result addObject:twittModel];
@@ -64,7 +65,12 @@
   if ([accounts count] > 0) {
     result = accounts[0];
   } else {
-    result = [[Account alloc] initWithEntity:[Account entity] insertIntoManagedObjectContext:[self managedObjectContext]];
+    NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"Account" inManagedObjectContext:[self managedObjectContext]];
+    result = [[Account alloc] initWithEntity:entityDescription insertIntoManagedObjectContext:[self managedObjectContext]];
+    
+    result.username = [self.accountViewModel userName];
+    result.identifier = [self.accountViewModel identifier];
+    
   }
   return result;
 }

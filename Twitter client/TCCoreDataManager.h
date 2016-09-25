@@ -8,9 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
-@class ACAccountViewModel;
+@class ACAccountViewModel, CEObservableMutableArray;
 
 @interface TCCoreDataManager : NSObject
 - (id)initWithTwitterFeed:(id)twitterFeed forAccount:(ACAccountViewModel *)accountViewModel;
-- (NSArray *)start;
+- (CEObservableMutableArray *)start;
 @end
