@@ -23,10 +23,21 @@
 @interface TCFeedViewModel ()
 @property (nonatomic, strong) ACAccountStore *accountStore;
 @property (nonatomic, strong) ACAccountViewModel *selectedAccountViewModel;
-@property (assign) BOOL isOfflineMode;
+@property (nonatomic, strong) Reachability *reachability;
+
 @end
 
 @implementation TCFeedViewModel
+
+- (id)init {
+  
+  if (self = [super init]) {
+      [[self reachability] startNotifier];
+  }
+  return self;
+  
+}
+
 
 - (void)extractAccounts {
   
@@ -80,7 +91,7 @@
 - (void)pullFeed {
   if ([self isNetworkReachable]) {
     
-    [self clearFeed];
+    [self.selectedAccountViewModel deleteTwitts];
     
     __weak __typeof (self) weakSelf = self;
     [TCFeedOnlineFetch fetchWith:self.selectedAccountViewModel complitionHandler:^(CEObservableMutableArray *result, NSError *error) {
@@ -92,17 +103,17 @@
   }
 }
 
-- (void)clearFeed {  
-  for (TCTwittViewModel *twitterViewModel in self.twitts) {
-    [twitterViewModel markAsDeleteTwitt];
-  }
-  [self.twitts removeAllObjects];
-  [self saveManagedObgectContext];
-}
-
 - (void)saveManagedObgectContext {
   [(AppDelegate *)[UIApplication sharedApplication].delegate saveContext];
 }
+
+- (Reachability *)reachability {
+  if (_reachability == nil) {
+    _reachability = [Reachability reachabilityForInternetConnection];
+  }
+  return _reachability;
+}
+
 
 - (RACSignal *)pullToRefreshSignal {
   return [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
@@ -110,6 +121,8 @@
       if ([self isNetworkReachable]) {
           [self.selectedAccountViewModel deleteTwitts];
       } else {
+        
+          [[self reachability] startNotifier];
           [self.selectedAccountViewModel extractOfflineTwitts];
           [subscriber sendNext:[self.selectedAccountViewModel twitts]];
       }
@@ -128,6 +141,7 @@
     return nil;
   }];
 }
+
 
 @end
 
@@ -178,7 +192,6 @@
   }];
   
   [[self.refreshControl.rac_command.executionSignals concat] subscribeNext:^(id x) {
-    // Handle successful login
   }];
   
   __weak __typeof (self) weakSelf = self;
@@ -186,6 +199,12 @@
     [weakSelf showError:error];
   }];
 
+  
+  [[[[NSNotificationCenter defaultCenter] rac_addObserverForName:kReachabilityChangedNotification object:nil]
+    takeUntil:[self rac_willDeallocSignal]]
+   subscribeNext:^(id x) {
+     [weakSelf.viewModel pullFeed];
+   }];
 }
 
 - (UIAlertAction *)actionWithTitle:(NSString *)title

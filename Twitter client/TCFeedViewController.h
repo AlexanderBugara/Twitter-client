@@ -22,5 +22,6 @@
 @property (nonatomic, strong) CEObservableMutableArray *twitts;
 
 - (void)setAccountViewModel:(ACAccountViewModel *)accountViewModel;
+
 @end
 

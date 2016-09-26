@@ -25,7 +25,7 @@
                                 <action selector="loginAction:" destination="4PW-HK-D6O" id="e3A-LG-FcO"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="New twitt" id="4rj-2E-fl3">
+                        <barButtonItem key="rightBarButtonItem" systemItem="compose" id="4rj-2E-fl3">
                             <connections>
                                 <action selector="presentTwittSubmitter:" destination="4PW-HK-D6O" id="Cbb-Vm-9U2"/>
                             </connections>
