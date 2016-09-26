@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@class RACSignal, ACAccountViewModel, CEObservableMutableArray;
+@class RACSignal, RACCommand, ACAccountViewModel, CEObservableMutableArray;
 
 @interface TCFeedViewController : UITableViewController
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *logInButton;
@@ -22,6 +22,5 @@
 @property (nonatomic, strong) CEObservableMutableArray *twitts;
 
 - (void)setAccountViewModel:(ACAccountViewModel *)accountViewModel;
-- (void)pullFeed;
 @end
 

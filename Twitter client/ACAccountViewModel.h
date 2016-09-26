@@ -20,4 +20,5 @@
 - (CEObservableMutableArray *)twitts;
 - (void)saveContext;
 - (void)extractOfflineTwitts;
+- (void)deleteTwitts;
 @end

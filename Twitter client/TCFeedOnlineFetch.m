@@ -15,7 +15,7 @@
 @implementation TCFeedOnlineFetch
 
 + (void)fetchWith:(ACAccountViewModel *)accountViewModel
-complitionHandler:(void (^)(CEObservableMutableArray *))handler
+complitionHandler:(void (^)(CEObservableMutableArray *result, NSError *error))handler
 {
   __weak __typeof (self) weakSelf = self;
   
@@ -29,7 +29,7 @@ complitionHandler:(void (^)(CEObservableMutableArray *))handler
       id responseJson = [weakSelf jsonFromData:responseData];
       TCCoreDataManager *coreDataManager = [[TCCoreDataManager alloc] initWithTwitterFeed:responseJson forAccount:accountViewModel];
       [coreDataManager start];
-      handler([coreDataManager twitts]);
+      handler([coreDataManager twitts], error);
       
     });
     

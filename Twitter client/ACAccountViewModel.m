@@ -113,4 +113,14 @@
 - (NSManagedObjectContext *)managedObjectContext {
   return [(AppDelegate *)[UIApplication sharedApplication].delegate managedObjectContext];
 }
+
+- (void)deleteTwitts {
+   NSArray *twitts = [self.managedObjectAccount.twitts allObjects];
+  for (Twitt *twitt in twitts) {
+    [[self managedObjectContext] deleteObject:twitt];
+  }
+  [self saveContext];
+  [self.twitts removeAllObjects];
+}
+
 @end

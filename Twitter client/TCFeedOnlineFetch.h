@@ -12,5 +12,5 @@
 
 @interface TCFeedOnlineFetch : NSObject
 + (void)fetchWith:(ACAccountViewModel *)accountViewModel
-complitionHandler:(void (^)(CEObservableMutableArray *))handler;
+complitionHandler:(void (^)(CEObservableMutableArray *result, NSError *error))handler;
 @end

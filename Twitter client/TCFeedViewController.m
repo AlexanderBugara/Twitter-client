@@ -83,7 +83,7 @@
     [self clearFeed];
     
     __weak __typeof (self) weakSelf = self;
-    [TCFeedOnlineFetch fetchWith:self.selectedAccountViewModel complitionHandler:^(CEObservableMutableArray *result) {
+    [TCFeedOnlineFetch fetchWith:self.selectedAccountViewModel complitionHandler:^(CEObservableMutableArray *result, NSError *error) {
       weakSelf.twitts = result;
     }];
   } else {
@@ -102,6 +102,31 @@
 
 - (void)saveManagedObgectContext {
   [(AppDelegate *)[UIApplication sharedApplication].delegate saveContext];
+}
+
+- (RACSignal *)pullToRefreshSignal {
+  return [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
+    
+      if ([self isNetworkReachable]) {
+          [self.selectedAccountViewModel deleteTwitts];
+      } else {
+          [self.selectedAccountViewModel extractOfflineTwitts];
+          [subscriber sendNext:[self.selectedAccountViewModel twitts]];
+      }
+    
+      [TCFeedOnlineFetch fetchWith:self.selectedAccountViewModel complitionHandler:^(CEObservableMutableArray *result, NSError *error) {
+        
+        if (error) {
+          [subscriber sendError:error];
+        } else {
+          [subscriber sendNext:result];
+        }
+        [subscriber sendCompleted];
+        
+      }];
+  
+    return nil;
+  }];
 }
 
 @end
@@ -142,20 +167,25 @@
                                       selectionCommand:nil
                                           templateCell:nib];
   
-  UIRefreshControl *refresh = [[UIRefreshControl alloc] init];
-  refresh.tintColor = [UIColor grayColor];
-  refresh.attributedTitle = [[NSAttributedString alloc] initWithString:@"Pull to Refresh"];
-  [refresh addTarget:self action:@selector(pullToRefreshAction:) forControlEvents:UIControlEventValueChanged];
-  self.refreshControl = refresh;
+  UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
+  refreshControl.tintColor = [UIColor grayColor];
+  refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:@"Pull to Refresh"];
+  self.refreshControl = refreshControl;
   
-}
-
-- (void)pullToRefreshAction:(id)sender {
-  @weakify(self);
-  [RACObserve(_viewModel, twitts) subscribeNext:^(id x) {
-    [self_weak_.refreshControl endRefreshing];
+  self.refreshControl.rac_command = [[RACCommand alloc] initWithSignalBlock:^RACSignal *(id input) {
+    @strongify(self)
+    return [self.viewModel pullToRefreshSignal];
   }];
-  [self.viewModel pullFeed];
+  
+  [[self.refreshControl.rac_command.executionSignals concat] subscribeNext:^(id x) {
+    // Handle successful login
+  }];
+  
+  __weak __typeof (self) weakSelf = self;
+  [self.refreshControl.rac_command.errors subscribeNext:^(NSError *error) {
+    [weakSelf showError:error];
+  }];
+
 }
 
 - (UIAlertAction *)actionWithTitle:(NSString *)title
@@ -191,7 +221,39 @@
   if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter]) {
     SLComposeViewController *composerViewController = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeTwitter];
     [self presentViewController:composerViewController animated:YES completion:nil];
+    
+    __weak __typeof (self) weakSelf = self;
+    
+    composerViewController.completionHandler = ^(SLComposeViewControllerResult result) {
+      
+      if (result == SLComposeViewControllerResultDone) {
+          [weakSelf.viewModel pullFeed];
+      }
+      
+      dispatch_async(dispatch_get_main_queue(), ^{
+        [self dismissViewControllerAnimated:NO completion:nil];
+      });
+      
+    };
+    
   }
   
 }
+
+
+- (void)showError:(NSError *)error {
+  
+  UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:error.localizedDescription preferredStyle:UIAlertControllerStyleAlert];
+  
+  __weak __typeof (self) weakSelf = self;
+  [alertController addAction:[UIAlertAction actionWithTitle:@"OK"
+                                                      style:UIAlertActionStyleCancel
+                                                    handler:^(UIAlertAction * _Nonnull action) {
+    [weakSelf dismissViewControllerAnimated:YES completion:nil];
+  }]];
+  
+  [self presentViewController:alertController animated:YES completion:nil];
+  
+}
+
 @end
