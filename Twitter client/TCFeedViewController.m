@@ -144,6 +144,7 @@
 
 @interface TCFeedViewController ()
 @property (nonatomic, strong) TCFeedViewModel *viewModel;
+@property (nonatomic, strong) RACCommand *pullToRefreshCommand;
 @end
 
 @implementation TCFeedViewController
@@ -177,18 +178,8 @@
   self.refreshControl = refreshControl;
   __weak __typeof(self) weakSelf = self;
   
-  self.refreshControl.rac_command = [[RACCommand alloc] initWithSignalBlock:^RACSignal *(id input) {
-    return [weakSelf.viewModel signalPullToRefresh];
-  }];
-  
-  [self.refreshControl.rac_command.errors subscribeNext:^(NSError *error) {
-    [weakSelf showError:error];
-  }];
 
-//  [[self.refreshControl.rac_command.executionSignals concat] subscribeNext:^(NSArray *x) {
-//    [weakSelf displaySelectionOfAccounts:x];
-//  }];
-  
+  self.refreshControl.rac_command = self.pullToRefreshCommand;
   
   [[[[NSNotificationCenter defaultCenter] rac_addObserverForName:kReachabilityChangedNotification object:nil]
     takeUntil:[self rac_willDeallocSignal]]
@@ -200,13 +191,18 @@
     return [self signalComposeNewTwitt];
   }];
   
-  self.navigationItem.leftBarButtonItem.rac_command = [[RACCommand alloc] initWithSignalBlock:^RACSignal *(id input) {
+  RACCommand *showAccounts = [[RACCommand alloc] initWithSignalBlock:^RACSignal *(id input) {
     return [self.viewModel signalExtractAccounts];
   }];
   
-  [[self.navigationItem.leftBarButtonItem.rac_command.executionSignals concat] subscribeNext:^(NSArray *x) {
+  self.navigationItem.leftBarButtonItem.rac_command = showAccounts;
+  
+  [[showAccounts.executionSignals concat] subscribeNext:^(NSArray *x) {
     [weakSelf displaySelectionOfAccounts:x];
   }];
+  
+  [showAccounts execute:nil];
+  
 }
 
 - (UIAlertAction *)actionWithTitle:(NSString *)title
@@ -226,26 +222,24 @@
   for (ACAccountViewModel *viewModel in accounts) {
     [accountSelection addAction:[self actionWithTitle:viewModel.userName handler:^{
       [weakSelf.viewModel setAccountViewModel:viewModel];
-      [weakSelf.viewModel signalPullToRefresh];
+      [weakSelf.pullToRefreshCommand execute:nil];
     }]];
   }
   [self presentViewController:accountSelection animated:YES completion:nil];
 }
 
 - (RACSignal *)signalComposeNewTwitt {
+  
+   __weak __typeof (self) weakSelf = self;
   return [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
     if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter]) {
       SLComposeViewController *composerViewController = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeTwitter];
-      [self presentViewController:composerViewController animated:YES completion:nil];
-      
-      __weak __typeof (self) weakSelf = self;
+      [weakSelf presentViewController:composerViewController animated:YES completion:nil];
       
       composerViewController.completionHandler = ^(SLComposeViewControllerResult result) {
         
         if (result == SLComposeViewControllerResultDone) {
-          //[[weakSelf.viewModel signalPullToRefresh] subscribeNext:];
-          //[[weakSelf.viewModel pullToRefreshSignal] ];
-         
+          [weakSelf.pullToRefreshCommand execute:nil];
         }
          [subscriber sendCompleted];
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -274,4 +268,20 @@
   
 }
 
+- (RACCommand *)pullToRefreshCommand {
+  
+  if (!_pullToRefreshCommand) {
+    __weak __typeof (self) weakSelf = self;
+    _pullToRefreshCommand = [[RACCommand alloc] initWithSignalBlock:^RACSignal *(id input) {
+      return [weakSelf.viewModel signalPullToRefresh];
+    }];
+    
+    [_pullToRefreshCommand.errors subscribeNext:^(NSError *error) {
+      [weakSelf showError:error];
+    }];
+  }
+  
+  
+  return _pullToRefreshCommand;
+}
 @end
