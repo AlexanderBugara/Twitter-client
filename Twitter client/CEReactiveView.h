@@ -7,11 +7,18 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
+
+@protocol InterfaceCastomisation <NSObject>
+- (UIColor *)backgroundColor;
+- (UIColor *)userNameColor;
+@end
+
 
 /// A protocol which is adopted by views which are backed by view models.
 @protocol CEReactiveView <NSObject>
 
 /// Binds the given view model to the view
-- (void)bindViewModel:(id)viewModel;
+- (void)configureWithViewModel:(id <InterfaceCastomisation> )viewModel;
 
 @end

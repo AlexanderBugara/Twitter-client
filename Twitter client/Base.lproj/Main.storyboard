@@ -20,7 +20,7 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="ht4-s5-5Mj">
-                        <barButtonItem key="leftBarButtonItem" title="log in" id="Ila-vK-G57">
+                        <barButtonItem key="leftBarButtonItem" title="Accounts" id="Ila-vK-G57">
                             <connections>
                                 <action selector="loginAction:" destination="4PW-HK-D6O" id="e3A-LG-FcO"/>
                             </connections>

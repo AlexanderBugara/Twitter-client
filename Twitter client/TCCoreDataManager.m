@@ -12,6 +12,7 @@
 #import "Twitt+CoreDataClass.h"
 #import "ACAccountViewModel.h"
 #import "Account+CoreDataClass.h"
+#import <ReactiveCocoa/ReactiveCocoa.h>
 
 @interface TCCoreDataManager ()
 @property (nonatomic, strong) id twitterFeed;
@@ -31,7 +32,8 @@
 - (void)start {
   @try {
     for (NSDictionary *item in [self feedArray]) {
-      TCTwittViewModel *twittModel = [[TCTwittViewModel alloc] initWithJson:item managedObjectContext:[self managedObjectContext]];
+      TCTwittViewModel *twittModel = [[TCTwittViewModel alloc] initWithJson:item account:[self.accountViewModel account] managedObjectContext:[self managedObjectContext]];
+      
       [self.accountViewModel addTwittViewModel:twittModel];
     }
     [self.accountViewModel saveContext];

@@ -17,24 +17,28 @@
 + (void)fetchWith:(ACAccountViewModel *)accountViewModel
 complitionHandler:(void (^)(CEObservableMutableArray *result, NSError *error))handler
 {
-  __weak __typeof (self) weakSelf = self;
-  
-  SLRequest *feedRequest = [SLRequest requestForServiceType:SLServiceTypeTwitter requestMethod:SLRequestMethodGET URL:[NSURL URLWithString:[TCTwitterPaths feedPath]] parameters:@{@"count" : @"50", @"screen_name" : accountViewModel.userName}];
-  
-  feedRequest.account = [accountViewModel account];
-  [feedRequest performRequestWithHandler:^(NSData *responseData, NSHTTPURLResponse *urlResponse, NSError *error) {
+  @try {
+    __weak __typeof (self) weakSelf = self;
+    SLRequest *feedRequest = [SLRequest requestForServiceType:SLServiceTypeTwitter requestMethod:SLRequestMethodGET URL:[NSURL URLWithString:[TCTwitterPaths feedPath]] parameters:@{@"count" : @"50", @"screen_name" : accountViewModel.userName}];
     
-    dispatch_async(dispatch_get_main_queue(), ^{
+    feedRequest.account = [accountViewModel account];
+    [feedRequest performRequestWithHandler:^(NSData *responseData, NSHTTPURLResponse *urlResponse, NSError *error) {
       
-      id responseJson = [weakSelf jsonFromData:responseData];
-      TCCoreDataManager *coreDataManager = [[TCCoreDataManager alloc] initWithTwitterFeed:responseJson forAccount:accountViewModel];
-      [coreDataManager start];
-      handler([coreDataManager twitts], error);
+      dispatch_async(dispatch_get_main_queue(), ^{
+        
+        id responseJson = [weakSelf jsonFromData:responseData];
+        TCCoreDataManager *coreDataManager = [[TCCoreDataManager alloc] initWithTwitterFeed:responseJson forAccount:accountViewModel];
+        [coreDataManager start];
+        handler([coreDataManager twitts], error);
+        
+      });
       
-    });
+    }];
+  } @catch (NSException *exception) {
+    NSLog(@"TCFeedOnlineFetch fetch error");
+  } @finally {
     
-  }];
-  
+  }  
 }
 
 + (id)jsonFromData:(NSData *)data {

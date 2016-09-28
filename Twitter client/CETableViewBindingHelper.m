@@ -240,8 +240,8 @@ uint scrollViewDidEndScrollingAnimation:1;
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
   id<CEReactiveView> cell = [tableView dequeueReusableCellWithIdentifier:_templateCell.reuseIdentifier];
 
-  NSAssert([cell respondsToSelector:@selector(bindViewModel:)], @"The cells supplied to the CETableViewBindingHelper must implement the CEReactiveView protocol");
-  [cell bindViewModel:_data[indexPath.row]];
+  NSAssert([cell respondsToSelector:@selector(configureWithViewModel:)], @"The cells supplied to the CETableViewBindingHelper must implement the CEReactiveView protocol");
+  [cell configureWithViewModel:_data[indexPath.row]];
 
   return (UITableViewCell *)cell;
 }
