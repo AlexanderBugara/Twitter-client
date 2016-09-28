@@ -116,9 +116,8 @@
       if ([self isNetworkReachable]) {
           [self.selectedAccountViewModel deleteTwitts];
       } else {
-        
-          [[self reachability] startNotifier];
           [self.selectedAccountViewModel extractOfflineTwitts];
+          weakSelf.twitts = [self.selectedAccountViewModel twitts];
           [subscriber sendNext:[self.selectedAccountViewModel twitts]];
       }
     
@@ -184,7 +183,7 @@
   [[[[NSNotificationCenter defaultCenter] rac_addObserverForName:kReachabilityChangedNotification object:nil]
     takeUntil:[self rac_willDeallocSignal]]
    subscribeNext:^(id x) {
-     [[weakSelf.viewModel signalPullToRefresh] subscribeNext:nil];
+     [weakSelf.pullToRefreshCommand execute:nil];
    }];
   
   self.navigationItem.rightBarButtonItem.rac_command = [[RACCommand alloc] initWithSignalBlock:^RACSignal *(id input) {
