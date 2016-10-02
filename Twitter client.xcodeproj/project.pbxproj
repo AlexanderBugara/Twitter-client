@@ -16,6 +16,8 @@
 		1139D7BD1D9327D10017851C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1139D7BC1D9327D10017851C /* Assets.xcassets */; };
 		1139D7C01D9327D10017851C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1139D7BE1D9327D10017851C /* LaunchScreen.storyboard */; };
 		115677821DA0B25A00970FCD /* TCFeedOnlineFetchTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 115677811DA0B25A00970FCD /* TCFeedOnlineFetchTests.m */; };
+		115677841DA0B99500970FCD /* TCAccountViewModelTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 115677831DA0B99500970FCD /* TCAccountViewModelTests.m */; };
+		115677861DA0B9B700970FCD /* TCTwittViewModelTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 115677851DA0B9B700970FCD /* TCTwittViewModelTests.m */; };
 		117984291D95224E008D0535 /* CETableViewBindingHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 117984281D95224E008D0535 /* CETableViewBindingHelper.m */; };
 		1179842D1D952274008D0535 /* TCTwitterCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1179842B1D952274008D0535 /* TCTwitterCell.m */; };
 		1179842E1D952274008D0535 /* TCTwitterCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1179842C1D952274008D0535 /* TCTwitterCell.xib */; };
@@ -58,6 +60,8 @@
 		1139D7C61D9327D10017851C /* Twitter clientTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Twitter clientTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1139D7CC1D9327D10017851C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		115677811DA0B25A00970FCD /* TCFeedOnlineFetchTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCFeedOnlineFetchTests.m; sourceTree = "<group>"; };
+		115677831DA0B99500970FCD /* TCAccountViewModelTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCAccountViewModelTests.m; sourceTree = "<group>"; };
+		115677851DA0B9B700970FCD /* TCTwittViewModelTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCTwittViewModelTests.m; sourceTree = "<group>"; };
 		117984261D95224E008D0535 /* CEReactiveView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CEReactiveView.h; sourceTree = "<group>"; };
 		117984271D95224E008D0535 /* CETableViewBindingHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CETableViewBindingHelper.h; sourceTree = "<group>"; };
 		117984281D95224E008D0535 /* CETableViewBindingHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CETableViewBindingHelper.m; sourceTree = "<group>"; };
@@ -184,6 +188,8 @@
 				1139D7CC1D9327D10017851C /* Info.plist */,
 				117984351D9576DC008D0535 /* TCFeedViewModelTests.m */,
 				115677811DA0B25A00970FCD /* TCFeedOnlineFetchTests.m */,
+				115677831DA0B99500970FCD /* TCAccountViewModelTests.m */,
+				115677851DA0B9B700970FCD /* TCTwittViewModelTests.m */,
 			);
 			path = "Twitter clientTests";
 			sourceTree = "<group>";
@@ -441,7 +447,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				115677861DA0B9B700970FCD /* TCTwittViewModelTests.m in Sources */,
 				115677821DA0B25A00970FCD /* TCFeedOnlineFetchTests.m in Sources */,
+				115677841DA0B99500970FCD /* TCAccountViewModelTests.m in Sources */,
 				117984361D9576DC008D0535 /* TCFeedViewModelTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

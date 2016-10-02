@@ -32,7 +32,7 @@
 - (void)start {
   @try {
     for (NSDictionary *item in [self feedArray]) {
-      TCTwittViewModel *twittModel = [[TCTwittViewModel alloc] initWithJson:item account:[self.accountViewModel account] managedObjectContext:[self managedObjectContext]];
+      TCTwittViewModel *twittModel = [[TCTwittViewModel alloc] initWithJson:item account:[self.accountViewModel account]];
       
       [self.accountViewModel addTwittViewModel:twittModel];
     }

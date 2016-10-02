@@ -12,8 +12,7 @@
 @class Twitt, NSManagedObjectContext, Account, RACSignal, ACAccount;
 
 @interface TCTwittViewModel : NSObject<InterfaceCastomisation>
-- (id)initWithJson:(NSDictionary *)json account:(ACAccount *)account
-managedObjectContext:(NSManagedObjectContext *)managedObjectContext;
+- (id)initWithJson:(NSDictionary *)json account:(ACAccount *)account;
 - (Twitt *)twitt;
 - (id)initWithTwitt:(Twitt *)twitt;
 - (void)markAsDeleteTwitt;

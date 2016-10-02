@@ -16,7 +16,7 @@
 
 SPEC_BEGIN(TCFeedOnlineFetchTests)
 
-describe(@"testing... TCFeedOnlineFetch", ^{
+describe(@"TCFeedOnlineFetch", ^{
   context(@"When got twitter feed data and convert it to JSON", ^{
     it(@"it returns nil", ^{
       id result = [TCFeedOnlineFetch jsonFromData:nil];

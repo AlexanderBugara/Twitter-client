@@ -26,20 +26,25 @@
 
 @implementation TCTwittViewModel
 
-- (id)initWithJson:(NSDictionary *)json account:(ACAccount *)account
-managedObjectContext:(NSManagedObjectContext *)managedObjectContext {
+- (id)initWithJson:(NSDictionary *)json account:(ACAccount *)account {
   
   if (self = [super init]) {
-    _twitt = [[Twitt alloc] initWithEntity:[Twitt entity] insertIntoManagedObjectContext:managedObjectContext];
-    _twitt.text = json[@"text"];
-    _twitt.user = [self authorWithJson:json[@"user"] managedObjectContext:managedObjectContext];
-    _twitt.id_ = [json[@"id"] integerValue];
-    _text = _twitt.text;
+    _twitt = [self twittFromJSON:json];
     _username = _twitt.user.screen_name;
     _account = account;
+    _text = _twitt.text;
   }
   return self;
 }
+
+- (Twitt *)twittFromJSON:(NSDictionary *)json {
+  Twitt *twitt = [[Twitt alloc] initWithEntity:[Twitt entity] insertIntoManagedObjectContext:[self managedObjectContext]];
+  twitt.text = json[@"text"];
+  twitt.user = [self authorWithJson:json[@"user"] managedObjectContext:[self managedObjectContext]];
+  twitt.id_ = [json[@"id"] integerValue];
+  return twitt;
+}
+
 
 - (id)initWithTwitt:(Twitt *)twitt {
   

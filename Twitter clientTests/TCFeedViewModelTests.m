@@ -21,7 +21,7 @@
 
 SPEC_BEGIN(TCFeedViewModelTests)
 
-describe(@"get accounts", ^{
+describe(@"TCFeedViewModel", ^{
   
   __block NSMutableArray *accounts = nil;
   int accountsNumber = 4;
@@ -72,7 +72,7 @@ describe(@"get accounts", ^{
     }];
   });
   
-  it(@"should be username value match as selected accountviewmodel", ^{
+  it(@"should username value match as selected accountviewmodel", ^{
     
     [signal subscribeNext:^(NSArray *x) {
       
