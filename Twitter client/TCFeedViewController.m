@@ -25,6 +25,7 @@
 @property (nonatomic, strong) ACAccountViewModel *selectedAccountViewModel;
 @property (nonatomic, strong) Reachability *reachability;
 
+
 @end
 
 @implementation TCFeedViewModel
@@ -38,28 +39,59 @@
   
 }
 
-
 - (RACSignal *)signalExtractAccounts {
+  __weak __typeof (self) weakSelf = self;
+  return [self signalExtractAccounts:^{
+    return [weakSelf accounts];
+  } permission:^RACSignal *{
+    return [weakSelf signalPermissionGranted];
+  }];
+}
+
+- (RACSignal *)signalPermissionGranted {
+  __weak __typeof (self) weakSelf = self;
+  return [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
+    
+    [weakSelf.accountStore requestAccessToAccountsWithType:[weakSelf accountType] options:nil completion:^(BOOL granted, NSError *error) {
+        [subscriber sendNext:RACTuplePack(@(granted), error)];
+        [subscriber sendCompleted];
+    }];
+    
+    return nil;
+  }];
+}
+
+- (RACSignal *)signalExtractingAccounts:(BOOL) isGranted
+                                 error:(NSError *)error
+                          listAccounts:(NSArray *)listAccounts {
   
   __weak __typeof (self) weakSelf = self;
   return [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
-    [weakSelf.accountStore requestAccessToAccountsWithType:[weakSelf accountType] options:nil completion:^(BOOL granted, NSError *error) {
-      if (granted) {
-        dispatch_sync(dispatch_get_main_queue(), ^{
-          NSArray *accounts = [weakSelf.accountStore accountsWithAccountType:[weakSelf accountType]];
-          [subscriber sendNext:[weakSelf viewModelsForAccounts:accounts]];
-          [subscriber sendCompleted];
-        });
-        
-      } else if (error) {
-        [subscriber sendError:error];
-      }
-      
-    }];
-   return nil;
+    if (isGranted) {
+      [subscriber sendNext:[weakSelf viewModelsForAccounts:listAccounts]];
+      [subscriber sendCompleted];
+    } else if (error) {
+      [subscriber sendError:error];
+    }
+    return nil;
+  }];
+
+}
+
+- (RACSignal *)signalExtractAccounts:(NSArray * (^)(void))listAccountsBlock
+                          permission:(RACSignal * (^)(void))permissionBlock {
+
+  __weak __typeof (self) weakSelf = self;
+  return [permissionBlock() flattenMap:^RACStream *(RACTuple *value) {
+    return [weakSelf signalExtractingAccounts:[value.first boolValue]
+                                 error:value.second
+                          listAccounts:listAccountsBlock()];
   }];
   
-  
+}
+
+- (NSArray *)accounts {
+  return [self.accountStore accountsWithAccountType:[self accountType]];
 }
 
 - (NSArray *)viewModelsForAccounts:(NSArray *)accounts {
