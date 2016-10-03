@@ -8,9 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
-@class ACAccountViewModel, CEObservableMutableArray;
+@class TCAccountViewModel, CEObservableMutableArray;
 
 @interface TCFeedOnlineFetch : NSObject
-+ (void)fetchWith:(ACAccountViewModel *)accountViewModel
++ (void)fetchWith:(TCAccountViewModel *)accountViewModel
 complitionHandler:(void (^)(CEObservableMutableArray *result, NSError *error))handler;
 @end

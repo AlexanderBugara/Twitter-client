@@ -1,5 +1,5 @@
 //
-//  ACAccountViewModel.h
+//  TCAccountViewModel.h
 //  Twitter client
 //
 //  Created by Alexander on 9/22/16.
@@ -10,7 +10,7 @@
 
 @class ACAccount, Account, NSManagedObjectContext, TCTwittViewModel, CEObservableMutableArray;
 
-@interface ACAccountViewModel : NSObject
+@interface TCAccountViewModel : NSObject
 - (NSString *)userName;
 - (id)initWithAccount:(ACAccount *)account;
 - (ACAccount *)account;

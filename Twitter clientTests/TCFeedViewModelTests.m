@@ -10,7 +10,7 @@
 #import "TCFeedViewController.h"
 #import <ReactiveCocoa/ReactiveCocoa.h>
 #import <Accounts/Accounts.h>
-#import "ACAccountViewModel.h"
+#import "TCAccountViewModel.h"
 
 @interface TCFeedViewModel(TCFeedViewModelTests)
 - (id)jsonFromData:(NSData *)data;
@@ -62,7 +62,7 @@ describe(@"TCFeedViewModel", ^{
       [[x should] beKindOfClass:[NSArray class]];
         [[[x should] have:accountsNumber] items];
       
-        [x enumerateObjectsUsingBlock:^(ACAccountViewModel * _Nonnull accountViewModel, NSUInteger idx, BOOL * _Nonnull stop) {
+        [x enumerateObjectsUsingBlock:^(TCAccountViewModel * _Nonnull accountViewModel, NSUInteger idx, BOOL * _Nonnull stop) {
           ACAccount *account = accounts[idx];
           [[accountViewModel.account should] equal:account];
           [[accountViewModel.userName should] equal:account.username];
@@ -78,13 +78,15 @@ describe(@"TCFeedViewModel", ^{
       
       if (accountsNumber > 0) {
         ACAccount *account = accounts[0];
-        ACAccountViewModel *accountViewModel = x[0];
+        TCAccountViewModel *accountViewModel = x[0];
         [feedViewModel setAccountViewModel:accountViewModel];
         [[feedViewModel.navigationItemTitle should] equal:[account username]];
       }
       
     }];
   });
+  
+  
   
   
   

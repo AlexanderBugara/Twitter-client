@@ -9,10 +9,9 @@
 #import "TCFeedViewController.h"
 #import <ReactiveCocoa/ReactiveCocoa.h>
 #import <Accounts/Accounts.h>
-#import "ACAccountViewModel.h"
+#import "TCAccountViewModel.h"
 #import "TCTwitterPaths.h"
 #import <Social/Social.h>
-#import "TCCoreDataManager.h"
 #import "CETableViewBindingHelper.h"
 #import "CEObservableMutableArray.h"
 #import "Reachability.h"
@@ -22,7 +21,7 @@
 
 @interface TCFeedViewModel ()
 @property (nonatomic, strong) ACAccountStore *accountStore;
-@property (nonatomic, strong) ACAccountViewModel *selectedAccountViewModel;
+@property (nonatomic, strong) TCAccountViewModel *selectedAccountViewModel;
 @property (nonatomic, strong) Reachability *reachability;
 
 
@@ -99,7 +98,7 @@
   NSMutableArray *viewModels = [NSMutableArray array];
   
   for (ACAccount *account in accounts) {
-    ACAccountViewModel *viewModel = [[ACAccountViewModel alloc] initWithAccount:account];
+    TCAccountViewModel *viewModel = [[TCAccountViewModel alloc] initWithAccount:account];
     [viewModels addObject:viewModel];
   }
   
@@ -117,7 +116,7 @@
   return [self.accountStore accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter];
 }
 
-- (void)setAccountViewModel:(ACAccountViewModel *)accountViewModel {
+- (void)setAccountViewModel:(TCAccountViewModel *)accountViewModel {
   _selectedAccountViewModel = accountViewModel;
   [self setNavigationItemTitle:accountViewModel.userName];
 }
@@ -250,7 +249,7 @@
   UIAlertController *accountSelection = [[UIAlertController alloc] init];
 
   __weak __typeof (self) weakSelf = self;
-  for (ACAccountViewModel *viewModel in accounts) {
+  for (TCAccountViewModel *viewModel in accounts) {
     [accountSelection addAction:[self actionWithTitle:viewModel.userName handler:^{
       [weakSelf.viewModel setAccountViewModel:viewModel];
       [weakSelf.pullToRefreshCommand execute:nil];

@@ -1,12 +1,12 @@
 //
-//  ACAccountViewModel.m
+//  TCAccountViewModel.m
 //  Twitter client
 //
 //  Created by Alexander on 9/22/16.
 //  Copyright © 2016 ABV. All rights reserved.
 //
 
-#import "ACAccountViewModel.h"
+#import "TCAccountViewModel.h"
 #import <ReactiveCocoa/ReactiveCocoa.h>
 #import <Accounts/Accounts.h>
 #import "Account+CoreDataClass.h"
@@ -16,13 +16,13 @@
 #import "Twitt+CoreDataClass.h"
 #import "AppDelegate.h"
 
-@interface ACAccountViewModel()
+@interface TCAccountViewModel()
 @property (nonatomic, strong) ACAccount *account;
 @property (nonatomic, strong) CEObservableMutableArray *twitts;
 @property (nonatomic, strong) Account *managedObjectAccount;
 @end
 
-@implementation ACAccountViewModel
+@implementation TCAccountViewModel
 
 - (id)initWithAccount:(ACAccount *)account {
   if (self = [super init]) {

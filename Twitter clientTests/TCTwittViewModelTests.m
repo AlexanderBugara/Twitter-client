@@ -21,7 +21,7 @@
 SPEC_BEGIN(TCTwittViewModelTests)
 
 describe(@"TCTwittViewModel", ^{
-  context(@"creating from core data object", ^{
+  context(@"creating from JSON data", ^{
     
     NSDictionary *twittJSON = @{@"contributors":[NSNull null],
     @"coordinates": [NSNull null],
@@ -120,12 +120,7 @@ describe(@"TCTwittViewModel", ^{
     it(@"should ACAccount mutch with twitterViewModel account", ^{
       [[[twitteViewModel account] should] equal:account];
     });
-    it(@"should mutch useridentifier with ACAccount useridentier", ^{
-      [[[[twitteViewModel account] identifier] should] equal:@"useridentifier"];
-    });
-    it(@"should mutch username with ACAccount username", ^{
-      [[[[twitteViewModel account] username] should] equal:@"myscreen_username"];
-    });
+    
     
  });
 });
